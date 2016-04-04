@@ -8,14 +8,14 @@ using System.Windows.Forms;
 
 namespace Mandelbrot
 {
-    class MandelbrotCalc
+    static class MandelbrotCalc
     {
-        public int MandelNumber { get; }
-        public MandelbrotCalc(double startX, double startY)
+        public static int Calculate(double startX, double startY)
         {
             double a = startX;
             double tempA, tempB;
             double b = startY;
+            int mandelNumber;
             int i;
             for (i = 0; pythagorasLength(a, b) <= 2 && i < 100; i++)
             {
@@ -24,13 +24,25 @@ namespace Mandelbrot
                 a = tempA;
                 b = tempB;
             }
-            MandelNumber = i;
+            return mandelNumber = i;
         }
-
-        private double pythagorasLength(double a, double b)
+        private static double pythagorasLength(double a, double b)
         {
             return Math.Sqrt(a * a + b * b);
         }
 
+        public static double[] getParallelBounds(int processorCount, Bitmap bmp)
+        {
+            double equalParts = (double)bmp.Width / processorCount;
+            double partition = Math.Ceiling(equalParts);
+            int bound = (int)Math.Ceiling(bmp.Width / equalParts);
+            double[] fromToInclusive = new double[bound];
+            for (int i = 0; i < bound; i++)
+            {
+                fromToInclusive[i] = partition;
+                partition += equalParts;
+            }
+            return fromToInclusive;
+        }
     }
 }

@@ -16,14 +16,11 @@ namespace Mandelbrot
     {
         public string Coordinates { get; set; }
 
-        private Label lb = new Label();
         private Bitmap bmp;
 
         private double scale { get; set; }
         private double[] coordinates { get; set; }
-        private static double offsetX, offsetY;
         private static double midX, midY;
-        private Task[] drawTasks;
 
         private readonly static int processorCount = Environment.ProcessorCount;
 
@@ -32,15 +29,11 @@ namespace Mandelbrot
             InitializeComponent();
             bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             scale = 0.01;
-            offsetX = bmp.Width / 2;
-            offsetY = bmp.Height / 2;
-            DrawImage(bmp, scale);
+            MandelbrotDraw.DrawImage(bmp, scale, 0, 0, ref pictureBox1);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
-            Controls.Remove(lb);
             TextBox tb = sender as TextBox;
             tb.BackColor = Color.White;
             tb.Text = Regex.Replace(tb.Text, @"\s+", "");
@@ -55,67 +48,29 @@ namespace Mandelbrot
             }
         }
 
-        private double[] getParallelBounds(int processorCount)
-        {
-            double equalParts = (double)bmp.Width / processorCount;
-            double partition = Math.Ceiling(equalParts);
-            int bound = (int)Math.Ceiling(bmp.Width / equalParts);
-            double[] fromToInclusive = new double[bound];
-            for (int i = 0; i < bound; i++)
-            {
-                fromToInclusive[i] = partition;
-                partition += equalParts;
-            }
-            return fromToInclusive;
-        }
-
-        private void DrawImage(Bitmap bmp, double scale)
-        {
-            double[] fromToInclusive = getParallelBounds(processorCount);
-            OptimizedBitmap b = new OptimizedBitmap(bmp);
-            b.LockImage();
-            drawTasks = new Task[fromToInclusive.Length];
-
-            Parallel.For(0, bmp.Height, new ParallelOptions { MaxDegreeOfParallelism = processorCount }, y =>
-           {
-               for (int i = 0; i < offsetX * 2; i++)
-               {
-                   b.SetPixel(i, y, SetColor((i - offsetX) * scale + midX, (y - offsetY) * scale - midY));
-
-               }
-           });
-            b.UnlockImage();
-            pictureBox1.Image = b.workingBitmap;
-        }
-
-        private Color SetColor(double x, double y)
-        {
-            return MandelbrotDraw.MandelColor(new MandelbrotCalc(x, y).MandelNumber);
-        }
-
         private void pictureBox1_Click(object sender, MouseEventArgs e)
         {
             int x = e.Location.X;
             int y = e.Location.Y;
 
-            midX += (x - offsetX) * scale;
-            midY += (offsetY - y) * scale;
+            midX += (x - bmp.Width / 2) * scale;
+            midY += (bmp.Height / 2 - y) * scale;
 
             if (e.Button == MouseButtons.Left)
             {
-                ClickActions(o => o /= 2);
+                ClickActions(o => o /= 2, midX, midY);
             }
             else if (e.Button == MouseButtons.Right)
             {
-                ClickActions(o => o *= 2);
+                ClickActions(o => o *= 2, midX, midY);
             }
 
         }
 
-        private void ClickActions(Func<double, double> scalingDelegate)
+        private void ClickActions(Func<double, double> scalingDelegate, double midX, double midY)
         {
             scale = scalingDelegate(scale);
-            DrawImage(bmp, scale);
+            MandelbrotDraw.DrawImage(bmp, scale, midX, midY, ref pictureBox1);
             scaleTB.Text = scale.ToString();
             coordTB.Text = $"(" + Math.Round(midX, 6) + ";" + Math.Round(midY, 6) + ")";
         }

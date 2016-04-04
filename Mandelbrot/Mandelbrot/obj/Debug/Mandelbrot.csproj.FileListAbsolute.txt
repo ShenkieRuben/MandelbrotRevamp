@@ -7,3 +7,12 @@ C:\Users\Ruben\Desktop\Mandelbrot\Mandelbrot\obj\Debug\Mandelbrot.Properties.Res
 C:\Users\Ruben\Desktop\Mandelbrot\Mandelbrot\obj\Debug\Mandelbrot.csproj.GenerateResource.Cache
 C:\Users\Ruben\Desktop\Mandelbrot\Mandelbrot\obj\Debug\Mandelbrot.exe
 C:\Users\Ruben\Desktop\Mandelbrot\Mandelbrot\obj\Debug\Mandelbrot.pdb
+C:\Users\Ruben\Desktop\MandelbrotRevamp\Mandelbrot\Mandelbrot\bin\Debug\Mandelbrot.exe.config
+C:\Users\Ruben\Desktop\MandelbrotRevamp\Mandelbrot\Mandelbrot\obj\Debug\Mandelbrot.exe
+C:\Users\Ruben\Desktop\MandelbrotRevamp\Mandelbrot\Mandelbrot\obj\Debug\Mandelbrot.pdb
+C:\Users\Ruben\Desktop\MandelbrotRevamp\Mandelbrot\Mandelbrot\obj\Debug\Mandelbrot.csprojResolveAssemblyReference.cache
+C:\Users\Ruben\Desktop\MandelbrotRevamp\Mandelbrot\Mandelbrot\obj\Debug\Mandelbrot.Mandelbrot.resources
+C:\Users\Ruben\Desktop\MandelbrotRevamp\Mandelbrot\Mandelbrot\obj\Debug\Mandelbrot.Properties.Resources.resources
+C:\Users\Ruben\Desktop\MandelbrotRevamp\Mandelbrot\Mandelbrot\obj\Debug\Mandelbrot.csproj.GenerateResource.Cache
+C:\Users\Ruben\Desktop\MandelbrotRevamp\Mandelbrot\Mandelbrot\bin\Debug\Mandelbrot.exe
+C:\Users\Ruben\Desktop\MandelbrotRevamp\Mandelbrot\Mandelbrot\bin\Debug\Mandelbrot.pdb
